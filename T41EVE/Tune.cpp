@@ -31,8 +31,8 @@ uint64_t Clk0SetFreq = 0;
 uint64_t Clk1SetFreq = 0;
 uint64_t Clk2SetFreq = 0;
 
-#define MASTER_CLK_MULT_RX 2
-#define MASTER_CLK_MULT_TX 2
+const uint64_t MASTER_CLK_MULT_RX{2};
+const uint64_t MASTER_CLK_MULT_TX{2};
 
 /*****
   Purpose: A special variant of SetFreq() used only for calibration.
@@ -219,11 +219,7 @@ void ResetFlipFlops() {
   // Toggle GPO0 low momentarily to reset the divide-by-2 flop-flops.
   // GPO0 is held high during normal operation.
   si5351.output_enable(SI5351_CLK2, 0);
-#ifdef PLLMODULE
   si5351.output_enable(SI5351_CLK0, 0);
-#else
-  si5351.output_enable(SI5351_CLK1, 0);
-#endif
   digitalWrite(0, LOW);  // Reset low.
   delay(500);
   digitalWrite(0, HIGH);  // Normal operation high.
